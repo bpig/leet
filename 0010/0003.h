@@ -30,9 +30,23 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        char m[256] = {0};
+        char m[256];
         int ans = 0;
-
+        for (int i = 0; i < s.size(); ++i) {
+            std::fill(m, m + 256, 0);
+            for (auto c: s.substr(i)) {
+                if (m[c] != 0) {
+                    break;
+                }
+                m[c] = 1;
+            }
+            int sum = std::accumulate(
+                    m, m + 256, 0, [](int acc, char element) {
+                return acc + (int)element;
+            });
+            ans = sum > ans ? sum : ans;
+        }
+        return ans;
     }
 };
 

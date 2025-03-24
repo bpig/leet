@@ -14,6 +14,7 @@
 #include <unordered_set>
 #include <chrono>
 #include <format>
+#include <numeric>
 
 using namespace std;
 #endif //LEET_UTIL_H
