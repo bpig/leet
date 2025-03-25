@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 include_directories(.)
 
 set(TARGET 0010/0003.h)
+
 add_definitions(-DTARGET=\"${TARGET}\")
 
 add_executable(1

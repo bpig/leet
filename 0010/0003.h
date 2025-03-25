@@ -29,29 +29,42 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 
 class Solution {
 public:
+    inline int get_max(char* m, int ans) {
+        int sum = accumulate(
+                m, m + 256, 0, [](int acc, char element) {
+                    return acc + (element != -1 ? 1 : 0);
+                });
+        ans = sum > ans ? sum : ans;
+        return ans;
+    }
     int lengthOfLongestSubstring(string s) {
         char m[256];
+        fill(m, m+256, -1);
         int ans = 0;
         for (int i = 0; i < s.size(); ++i) {
-            std::fill(m, m + 256, 0);
-            for (auto c: s.substr(i)) {
-                if (m[c] != 0) {
-                    break;
+            char c = s[i] - 'a';
+            if (m[c] != -1) {
+                ans = get_max(m, ans);
+                for (int j = 0; j < 256; ++j) {
+                    if (m[j] != -1 && m[j] < m[c]) {
+                        m[j] = -1;
+                    }
                 }
-                m[c] = 1;
             }
-            int sum = std::accumulate(
-                    m, m + 256, 0, [](int acc, char element) {
-                return acc + (int)element;
-            });
-            ans = sum > ans ? sum : ans;
+            m[c] = i;
         }
+        ans = get_max(m, ans);
         return ans;
     }
 };
 
 void test() {
     auto s = Solution();
+    {
+        string input = "dvdf";
+        auto ans = s.lengthOfLongestSubstring(input);
+        cout << format("{}, {}, expect 3\n", input, ans);
+    }
     {
         string input = "pwwkew";
         auto ans = s.lengthOfLongestSubstring(input);
