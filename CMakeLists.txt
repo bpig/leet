@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories(.)
 
-set(TARGET 0010/0003.h)
+set(TARGET 00/5.h)
 
 add_definitions(-DTARGET=\"${TARGET}\")
 
